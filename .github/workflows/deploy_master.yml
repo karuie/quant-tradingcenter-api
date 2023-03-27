@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to Quant Server
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  pull_and_deploy:
+    # The type of runner that the job will run on
+    runs-on: quant-server
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{github.ref_name}}
+          path: ./
+
+      # Runs a single command using the runners shell
+      # - name: Run a one-line script
+      #   run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Pull codes and reload docker
+        run: |
+          # cp -r /home/github_runner/actions-runner/_work/quant-api/quant-api/* /home/quant_flask_app/
+          cd /home/quant_flask_app/
+          git pull git@github-quant-api:stablegroup/quant-api.git master
+          docker-compose restart flask_api
+          echo Done.

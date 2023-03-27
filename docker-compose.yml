@@ -1,0 +1,23 @@
+# yaml 配置
+# reference: https://docs.docker.com/compose/compose-file/#volumes
+version: '3.8'
+services:
+    flask_api:
+        container_name: flask_api
+        build:
+            context: ./app/
+            network: net-quant
+        ports:
+            - "127.0.0.1:7001:7001"
+        networks:
+            - net-quant
+        restart: always
+        volumes:
+            - ./app:/home/app
+            - /home/falcon:/home/falcon
+#        depends_on:
+#            - redis
+#            - mysql
+networks:
+    net-quant:
+        name: net-quant
