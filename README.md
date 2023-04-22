@@ -56,7 +56,7 @@ an authorization header with key: `X-Api-Key` and the value defined in your .env
 here is an example with built-in curl command:
 ```shell
 curl -i -X GET \
-  -H "X-Api-Key:C75BDA2B0F854B26BC55B15150ABCDB0" \
+  -H "X-Api-Key:xxx" \
   'http://127.0.0.1:5000/'
 ```
 
